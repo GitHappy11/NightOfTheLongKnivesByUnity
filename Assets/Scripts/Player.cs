@@ -30,11 +30,22 @@ public class Player : MonoBehaviour
     private void Flip()
     {
         //利用向量进行翻转图片进行转向
-        if (moveH>0)
+        //if (moveH>0)
+        //{
+        //    transform.eulerAngles = new Vector3(0, 0, 0);
+        //}
+        //if (moveH<0)
+        //{
+        //    transform.eulerAngles = new Vector3(0, 180, 0);
+        //}
+
+        //利用鼠标位置进行翻转图片转向
+        //根据人物位置的x轴和鼠标位置的x轴的大小对比  进行翻转
+        if (transform.position.x<Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
-        if (moveH<0)
+        if (transform.position.x > Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
         }

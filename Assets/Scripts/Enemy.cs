@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
+    //目标（玩家）位置
     private Transform target;
     [SerializeField]
     private float moveSpeed;
@@ -13,16 +14,29 @@ public class Enemy : MonoBehaviour
     private float maxHP;
     public float hp;
 
+    ////敌人是否收到伤害（无敌模式）
+    //[HideInInspector]
+    //public bool isAttacked;
+
+    //死亡后产生爆炸效果
+    public GameObject explosionEffect;
+
     //材质
     private SpriteRenderer sp;
     //受伤时间（颜色变化时间）
     public float hurtLength;
-    //受伤次数计数器
+    //受伤计时器
     private float hurtCounter;
+    //受伤次数
+    private int hurtCount;
+
+    public Rigidbody2D rb;
 
     private void Awake()
     {
         sp = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        
     }
 
     private void Start()
@@ -57,8 +71,12 @@ public class Enemy : MonoBehaviour
     {
         hp -= amount;
         HurtShader();
+        hurtCount++;
+        Debug.Log(hurtCount);
         if (hp<=0)
         {
+            //生成死亡特效
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         
